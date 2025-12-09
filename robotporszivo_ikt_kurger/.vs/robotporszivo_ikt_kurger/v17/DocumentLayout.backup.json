@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Gergo\\Desktop\\MINDEN\\Suli\\2025-2026_tanev\\2025-2026\\C#\\robotporszivo_ikt\\robotporszivo_ikt_kurger\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A82EBEAD-6BF3-4F37-9BBD-DF2383C9C491}|robotporszivo_ikt_kurger\\robotporszivo_ikt_kurger.csproj|c:\\users\\gergo\\desktop\\minden\\suli\\2025-2026_tanev\\2025-2026\\c#\\robotporszivo_ikt\\robotporszivo_ikt_kurger\\robotporszivo_ikt_kurger\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A82EBEAD-6BF3-4F37-9BBD-DF2383C9C491}|robotporszivo_ikt_kurger\\robotporszivo_ikt_kurger.csproj|solutionrelative:robotporszivo_ikt_kurger\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Gergo\\Desktop\\MINDEN\\Suli\\2025-2026_tanev\\2025-2026\\C#\\robotporszivo_ikt\\robotporszivo_ikt_kurger\\robotporszivo_ikt_kurger\\Program.cs",
+              "RelativeDocumentMoniker": "robotporszivo_ikt_kurger\\Program.cs",
+              "ToolTip": "C:\\Users\\Gergo\\Desktop\\MINDEN\\Suli\\2025-2026_tanev\\2025-2026\\C#\\robotporszivo_ikt\\robotporszivo_ikt_kurger\\robotporszivo_ikt_kurger\\Program.cs",
+              "RelativeToolTip": "robotporszivo_ikt_kurger\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T16:25:30.753Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
