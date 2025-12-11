@@ -1,0 +1,8 @@
+C:\Users\Gergo\Desktop\MINDEN\Suli\2025-2026_tanev\2025-2026\C#\robotporszivo_ikt\robotporszivo_ikt_kurger\robotporszivo_ikt_kurger\bin\Debug\robotporszivo_ikt_kurger.exe.config
+C:\Users\Gergo\Desktop\MINDEN\Suli\2025-2026_tanev\2025-2026\C#\robotporszivo_ikt\robotporszivo_ikt_kurger\robotporszivo_ikt_kurger\bin\Debug\robotporszivo_ikt_kurger.exe
+C:\Users\Gergo\Desktop\MINDEN\Suli\2025-2026_tanev\2025-2026\C#\robotporszivo_ikt\robotporszivo_ikt_kurger\robotporszivo_ikt_kurger\bin\Debug\robotporszivo_ikt_kurger.pdb
+C:\Users\Gergo\Desktop\MINDEN\Suli\2025-2026_tanev\2025-2026\C#\robotporszivo_ikt\robotporszivo_ikt_kurger\robotporszivo_ikt_kurger\obj\Debug\robotporszivo_ikt_kurger.csproj.AssemblyReference.cache
+C:\Users\Gergo\Desktop\MINDEN\Suli\2025-2026_tanev\2025-2026\C#\robotporszivo_ikt\robotporszivo_ikt_kurger\robotporszivo_ikt_kurger\obj\Debug\robotporszivo_ikt_kurger.csproj.CoreCompileInputs.cache
+C:\Users\Gergo\Desktop\MINDEN\Suli\2025-2026_tanev\2025-2026\C#\robotporszivo_ikt\robotporszivo_ikt_kurger\robotporszivo_ikt_kurger\obj\Debug\robotporszivo_ikt_kurger.exe
+C:\Users\Gergo\Desktop\MINDEN\Suli\2025-2026_tanev\2025-2026\C#\robotporszivo_ikt\robotporszivo_ikt_kurger\robotporszivo_ikt_kurger\obj\Debug\robotporszivo_ikt_kurger.pdb
+C:\Users\Gergo\Desktop\MINDEN\Suli\2025-2026_tanev\2025-2026\C#\robotporszivo_ikt\robotporszivo_ikt_kurger\robotporszivo_ikt_kurger\obj\Debug\robotporszivo_ikt_kurger.exe.config

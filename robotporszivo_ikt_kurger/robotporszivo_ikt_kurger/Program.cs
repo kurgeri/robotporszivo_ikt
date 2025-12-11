@@ -23,7 +23,41 @@ namespace robotporszivo_ikt_kurger
                 }
 
             } while (n < 20 || n > 30 || m < 20 || m > 30 || n == m);
-            int[,] lakas = new int[n, m];
+            char[,] lakas = new char[n, m];
+            Feltolt(lakas);
+           
+        }
+
+        static void Feltolt(char[,] t)
+        {
+
+            Random rnd = new Random();
+            for (int i = 0; i < t.GetLength(0); i++)
+        {
+           for (int j = 0 ; j < t.GetLength(1); j++)
+           {
+                   
+                    int szam = rnd.Next(1, 11);
+                   
+                    if (szam <= 5) // szabad
+                    {
+                        t[i, j] = '_';
+                    }
+                    else if (szam <= 7) // bútor
+                    {
+                        t[i, j] = 'b';
+                    }
+                    else // koszos
+                    {
+                        t[i, j] = 'k';
+                    }
+
+                    Console.Write($"{t[i, j]}  ");  
+           }
+           Console.WriteLine();
+        }
+        
+        
         }
     }
 }
