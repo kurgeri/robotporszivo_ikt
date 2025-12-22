@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace robotporszivo_ikt_kurger
     {
         static void Main(string[] args)
         {
-            int n = 0, m = 0; // N sor, M oszlop
+            int n, m; // N sor, M oszlop
             do
             {
                 Console.Write("Adja meg hány sorból álljon a tömb (20-30, sorok és oszlopok NEM = ):");
@@ -55,11 +56,11 @@ namespace robotporszivo_ikt_kurger
                         t[i, j] = 'k';
                         koszos = true;
                     }
-                   
+
 
 
                 }
-               
+
 
             }
 
@@ -71,37 +72,110 @@ namespace robotporszivo_ikt_kurger
 
         static void Clanker(char[,] t)
         {
-        
-            List<int[,]> ureshelyek = new List<int[,]>();
+
+            List<int> ureshelyek = new List<int>();
+
+
+
 
             Random rnd = new Random();
-      
+
             for (int i = 0; i < t.GetLength(0); i++)
             {
                 for (int j = 0; j < t.GetLength(1); j++)
                 {
 
-                 
+
                     if (t[i, j] == '_')
                     {
-                       // robot elhelyezését bekéne fejezni te kaki
+
+                        ureshelyek.Add(i);
+                        ureshelyek.Add(j);
 
 
 
 
 
+
+                    }
+                }
+
+
+            }
+            int robothelye = rnd.Next(0, ureshelyek.Count);
+
+            for (int i = 0; i < t.GetLength(0); i++)
+            {
+                for (int j = 0; j < t.GetLength(1); j++)
+                {
+                    if (t[i, j] == '_')
+                    {
+
+
+
+                        if (robothelye % 2 == 0)
+                        {
+                            t[ureshelyek[robothelye], ureshelyek[robothelye + 1]] = 'r';
+                           
+                        }
+                        else
+                        {
+                            t[ureshelyek[robothelye - 1], ureshelyek[robothelye]] = 'r';
+                        }
 
                     }
                     if (t[i, j] == 'r')
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                     }
-                    Console.Write($"{t[i, j]}  ");
-                    Console.ResetColor();   
+                    Console.Write($"{t[i, j]} ");
+                    Console.ResetColor();
                 }
                 Console.WriteLine();
             }
+            ureshelyek.ForEach(Console.Write);
 
+       
         }
+
+
+
+
+
+
+
+
+
+        //static void Robotmozg(char[,] t)
+        //{
+        //    Random rnd = new Random();
+        //    for (int i = 0; i < t.GetLength(0); i++)
+        //    {
+
+        //        for (int j = 0; j < t.GetLength(1); j++)
+        //        {
+        //            int lepes = rnd.Next(1, 5);
+        //            switch (lepes)
+        //            {
+        //                //case 1: // Fel
+        //                //    t[i, j + 1]
+        //                //        break;
+        //                //case 2: // Le
+        //                //    t[i, j - 1]
+        //                //        break;
+        //                //case 3: // Balra
+        //                //    t[i-1,j]
+        //                //        break;
+        //                //case 4: // Jobbra
+        //                //    t[i+1,j]
+        //                //        break;
+
+
+        //            }
+
+        //        }
+
+        //    }
+        //}
     }
 }
