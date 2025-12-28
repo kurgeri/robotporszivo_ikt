@@ -17,7 +17,7 @@ namespace robotporszivo_ikt_kurger
             {
                 Console.Write("Adja meg hány sorból álljon a tömb (20-30, sorok és oszlopok NEM = ):");
                 n = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Adja meg hány álljon a tömb (20-30, sorok és oszlopok NEM = ):");
+                Console.Write("Adja meg hány oszlopból álljon a tömb (20-30, sorok és oszlopok NEM = ):");
                 m = Convert.ToInt32(Console.ReadLine());
                 if (n < 20 || n > 30 || m < 20 || m > 30 || n == m)
                 {
@@ -28,6 +28,8 @@ namespace robotporszivo_ikt_kurger
             char[,] lakas = new char[n, m];
             Feltolt(lakas);
             Clanker(lakas);
+            Robotmozg(lakas);
+
 
         }
 
@@ -91,17 +93,12 @@ namespace robotporszivo_ikt_kurger
 
                         ureshelyek.Add(i);
                         ureshelyek.Add(j);
-
-
-
-
-
-
                     }
                 }
 
 
             }
+
             int robothelye = rnd.Next(0, ureshelyek.Count);
 
             for (int i = 0; i < t.GetLength(0); i++)
@@ -116,7 +113,7 @@ namespace robotporszivo_ikt_kurger
                         if (robothelye % 2 == 0)
                         {
                             t[ureshelyek[robothelye], ureshelyek[robothelye + 1]] = 'r';
-                           
+
                         }
                         else
                         {
@@ -124,58 +121,163 @@ namespace robotporszivo_ikt_kurger
                         }
 
                     }
+
+
                     if (t[i, j] == 'r')
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                    }
+                    if (t[i, j] == 'b')
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                    }
+                    if (t[i, j] == 'k')
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
                     }
                     Console.Write($"{t[i, j]} ");
                     Console.ResetColor();
                 }
                 Console.WriteLine();
             }
-            ureshelyek.ForEach(Console.Write);
-
-       
         }
 
 
 
 
+        static void Robotmozg(char[,] t)
+        {
+            int rhely_i, rhely_j ;
+            for (int i = 0; i < t.GetLength(0); i++)
+            {
+
+                for (int j = 0; j < t.GetLength(1); j++)
+                {
+                    if (t[i, j] == 'r')
+                    {
+                        rhely_i = i;
+                        rhely_j = j;
+
+                    }
+                }
+            }
+
+            Random rnd = new Random();
+            for (int i = 0; i < t.GetLength(0); i++)
+            {
+
+                for (int j = 0; j < t.GetLength(1); j++)
+                {
+                    int lepes = rnd.Next(1, 5); // 1 Fel, 2 Le, 3 Jobb, 4 Bal
+
+
+                   
+
+
+
+                    if (lepes == 1 && t[rhely_i - 1, rhely_j] != 'b' && rhely_i - 1 >= 0)
+                    {
+
+
+                        for (int k = 0; k < t.GetLength(0); k++)
+                        {
+                            for (int l = 0; l < t.GetLength(1); l++)
+                            {
+                                t[rhely_i - 1, rhely_j] = 'r';
+                                Console.Write($"{t[rhely_i, rhely_j]} ");
+                            }
+                            Console.WriteLine();
+                        }
+
+
+
+
+                    }
+                    else if (lepes == 2 && t[rhely_i + 1, rhely_j] != 'b' && rhely_i + 1 <= t.GetLength(0))
+                    {
+                        for (int k = 0; k < t.GetLength(0); k++)
+                        {
+                            for (int l = 0; l < t.GetLength(1); l++)
+                            {
+                                t[rhely_i + 1, rhely_j] = 'r';
+                                Console.Write($"{t[rhely_i, rhely_j]} ");
+                            }
+                            Console.WriteLine();
+                        }
+
+
+
+
+                    }
+                    else if (lepes == 3 && t[rhely_i, rhely_j + 1] != 'b' && rhely_j + 1 <= t.GetLength(1))
+                    {
+                        for (int k = 0; k < t.GetLength(0); k++)
+                        {
+                            for (int l = 0; l < t.GetLength(1); l++)
+                            {
+                                t[rhely_i , rhely_j + 1 ] = 'r';
+                                Console.Write($"{t[rhely_i, rhely_j]} ");
+                            }
+                            Console.WriteLine();
+                        }
+
+
+
+
+                    }
+                    else if (lepes == 4 && t[rhely_i, rhely_j - 1] != 'b' && rhely_j - 1 >= 0)
+                    {
+                        for (int k = 0; k < t.GetLength(0); k++)
+                        {
+                            for (int l = 0; l < t.GetLength(1); l++)
+                            {
+                                t[rhely_i, rhely_j - 1] = 'r';
+                                Console.Write($"{t[rhely_i, rhely_j]} ");
+                            }
+                            Console.WriteLine();
+                        }
+
+
+
+
+                    }
 
 
 
 
 
-        //static void Robotmozg(char[,] t)
-        //{
-        //    Random rnd = new Random();
-        //    for (int i = 0; i < t.GetLength(0); i++)
-        //    {
 
-        //        for (int j = 0; j < t.GetLength(1); j++)
-        //        {
-        //            int lepes = rnd.Next(1, 5);
-        //            switch (lepes)
-        //            {
-        //                //case 1: // Fel
-        //                //    t[i, j + 1]
-        //                //        break;
-        //                //case 2: // Le
-        //                //    t[i, j - 1]
-        //                //        break;
-        //                //case 3: // Balra
-        //                //    t[i-1,j]
-        //                //        break;
-        //                //case 4: // Jobbra
-        //                //    t[i+1,j]
-        //                //        break;
+                }
 
 
-        //            }
+            }
+            for (int i = 0; i < t.GetLength(0); i++)
+            {
+                for (int j = 0; j < t.GetLength(1); j++)
+                {
+                    if (t[i, j] == 'r')
+                    {
 
-        //        }
+                        Console.WriteLine($"{i}{j}");
+                    }
 
-        //    }
-        //}
+                }
+
+            }
+
+        }
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
