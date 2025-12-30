@@ -25,11 +25,10 @@ namespace robotporszivo_ikt_kurger
                     Console.WriteLine("Nem megfelelő értéktartományban adott összeget!");
                 }
 
-            } while (n < 20 || n > 30 || m < 20 || m > 30 || n == m);
+            } while (n < 5 || n > 30 || m < 5 || m > 30 || n == m);
             char[,] lakass = new char[n, m];
             Feltolt(lakass);
             lakass = Clanker(lakass);
-            Lakasmegjelenit(lakass);
             Robotmozg(lakass);
 
 
@@ -133,11 +132,13 @@ namespace robotporszivo_ikt_kurger
         }
         static void Lakasmegjelenit(char[,] lakas)
         {
+
             for (int i = 0; i < lakas.GetLength(0); i++)
             {
 
                 for (int j = 0; j < lakas.GetLength(1); j++)
                 {
+
 
                     if (lakas[i, j] == 'r')
                     {
@@ -153,10 +154,14 @@ namespace robotporszivo_ikt_kurger
                     }
                     Console.Write($"{lakas[i, j]} ");
                     Console.ResetColor();
+
                 }
+
                 Console.WriteLine();
+
             }
         }
+        
 
 
 
@@ -166,29 +171,30 @@ namespace robotporszivo_ikt_kurger
             bool takaritasvege = false;
             int[] robotpoz = new int[2];
             int koszoshelyekkezd = 0;
-            int jelkoszoshely = 0;
+            int jelkoszoshely;
             for (int i = 0; i < lakas.GetLength(0); i++)
             {
+
                 for (int j = 0; j < lakas.GetLength(1); j++)
                 {
                     if (lakas[i, j] == 'r')
                     {
                         robotpoz[0] = i;
                         robotpoz[1] = j;
-                 
+
                     }
                     if (lakas[i, j] == 'k')
                     {
                         koszoshelyekkezd++;
-                       
+
 
                     }
-                   
+
                 }
-         
+
 
             }
-        
+
 
             int jelenlegirobpoz_i = robotpoz[0];
             int jelenlegirobpoz_j = robotpoz[1];
@@ -196,7 +202,7 @@ namespace robotporszivo_ikt_kurger
             int lepesekszama = 0;
 
             Random rnd = new Random();
-           
+
 
             do
             {
@@ -205,22 +211,23 @@ namespace robotporszivo_ikt_kurger
                 {
                     for (int j = 0; j < lakas.GetLength(1); j++)
                     {
-                        if (lakas[i,j] == 'k')
+                        if (lakas[i, j] == 'k')
                         {
-                            jelkoszoshely++;                     
+                            jelkoszoshely++;
                         }
                     }
                 }
-               
 
-                        Console.Clear();
+
+                Console.Clear();
 
                 Lakasmegjelenit(lakas);
                 Console.WriteLine($"Robot jelenlegi helye: {jelenlegirobpoz_i}:{jelenlegirobpoz_j}");
                 Console.WriteLine($"Koszos helyek eredetileg: {koszoshelyekkezd}");
-                Console.WriteLine($"Jelenlegi koszoshelyek száma: {jelkoszoshely}");
+                Console.WriteLine($"Hátra maradt koszoshelyek száma: {jelkoszoshely}");
                 Console.WriteLine($"Lépések száma: {lepesekszama}");
-              
+
+
                 int regirobpoz_i = jelenlegirobpoz_i;
                 int regirobpoz_j = jelenlegirobpoz_j;
 
@@ -228,45 +235,75 @@ namespace robotporszivo_ikt_kurger
 
 
                 int lepes = rnd.Next(1, 5); // 1: Fel, 2: Le, 3: Jobb, 4: Bal
+                string merrelep = "";
+                Console.WriteLine($"Maga a lépés: {lepes} - {merrelep} ");
                 switch (lepes)
                 {
                     case 1:
-                        if ( jelenlegirobpoz_i - 1 >= 0 && lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] != 'b' )
+                        if (jelenlegirobpoz_i - 1 >= 0 && lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] != 'b')
                         {
-                           jelenlegirobpoz_i--;
+                            jelenlegirobpoz_i--;
                             lepesekszama++;
-                          
+                            merrelep = "Fel";
+
                         }
-                      
-                            break;
+                        else
+                        {
+                            lepes = rnd.Next(2, 5);
+
+                        }
+
+                        break;
                     case 2:
-                        if (jelenlegirobpoz_i + 1 <= lakas.GetLength(0) - 1  && lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] != 'b')
+                        if (jelenlegirobpoz_i + 1 <= lakas.GetLength(0) - 1 && lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] != 'b')
                         {
-                           jelenlegirobpoz_i++;
+                            jelenlegirobpoz_i++;
                             lepesekszama++;
+                            merrelep = "Le";
                         }
-                      
+                        else
+                        {
+
+                            lepes = rnd.Next(1, 5);
+                            if (lepes == 2)
+                            {
+                                lepes--;
+                            }
+                        }
+
 
                         break;
                     case 3:
-                        if (jelenlegirobpoz_j + 1 <= lakas.GetLength(1) - 1 && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] != 'b'  )
+                        if (jelenlegirobpoz_j + 1 <= lakas.GetLength(1) - 1 && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] != 'b')
                         {
                             jelenlegirobpoz_j++;
                             lepesekszama++;
+                            merrelep = "Jobb";
 
                         }
-                      
+                        else
+                        {
+                            lepes = rnd.Next(1, 5);
+                            if (lepes == 3)
+                            {
+                                lepes--;
+                            }
+                        }
+
 
                         break;
                     case 4:
-                        if ( jelenlegirobpoz_j - 1 >= 0 && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] != 'b' )
+                        if (jelenlegirobpoz_j - 1 >= 0 && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] != 'b')
                         {
                             jelenlegirobpoz_j--;
                             lepesekszama++;
+                            merrelep = "Bal";
 
                         }
-                      
-
+                        else
+                        {
+                            lepes = rnd.Next(1, 4);
+                        }
                         break;
 
 
@@ -275,23 +312,43 @@ namespace robotporszivo_ikt_kurger
 
 
                 }
+
                 lakas[regirobpoz_i, regirobpoz_j] = '_';
                 lakas[jelenlegirobpoz_i, jelenlegirobpoz_j] = 'r';
-                Thread.Sleep(1);
-                if(jelkoszoshely == 0)
+                Thread.Sleep(50);
+
+
+
+
+
+
+
+
+                if (jelkoszoshely == 0 || lepesekszama > 200)
                 {
                     takaritasvege = true;
                 }
-      
-
-
-
-
-
-
-
             } while (!takaritasvege);
-        
+            List<string> koszoslista = new List<string>();
+            string koszoshely;
+            for (int i = 0; i < lakas.GetLength(0); i++)
+            {
+                for (int j = 0; j < lakas.GetLength(1); j++)
+                {
+                    if (lakas[i,j] == 'k')
+                    {
+                       koszoshely = Convert.ToString($"({i}:{j})");
+                        koszoslista.Add(koszoshely);
+                    }
+                }
+            }
+            Console.WriteLine("A megmaradt koszos területek helyei:");
+            for (int i = 0; i < koszoslista.Count(); i++ )
+            {
+                Console.Write($"{koszoslista[i]}");
+            }
+
+
 
 
         }
