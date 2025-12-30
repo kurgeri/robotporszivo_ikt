@@ -165,7 +165,8 @@ namespace robotporszivo_ikt_kurger
         {
             bool takaritasvege = false;
             int[] robotpoz = new int[2];
-            int koszoshelyek = 0;
+            int koszoshelyekkezd = 0;
+            int jelkoszoshely = 0;
             for (int i = 0; i < lakas.GetLength(0); i++)
             {
                 for (int j = 0; j < lakas.GetLength(1); j++)
@@ -174,29 +175,52 @@ namespace robotporszivo_ikt_kurger
                     {
                         robotpoz[0] = i;
                         robotpoz[1] = j;
-                        Console.Write($"{robotpoz[0]} {robotpoz[1]}");
+                 
                     }
                     if (lakas[i, j] == 'k')
                     {
-                        koszoshelyek++;
+                        koszoshelyekkezd++;
+                       
 
                     }
+                   
                 }
+         
 
             }
+        
 
             int jelenlegirobpoz_i = robotpoz[0];
             int jelenlegirobpoz_j = robotpoz[1];
+
+            int lepesekszama = 0;
 
             Random rnd = new Random();
            
 
             do
             {
-                Console.Clear();
+                jelkoszoshely = 0;
+                for (int i = 0; i < lakas.GetLength(0); i++)
+                {
+                    for (int j = 0; j < lakas.GetLength(1); j++)
+                    {
+                        if (lakas[i,j] == 'k')
+                        {
+                            jelkoszoshely++;                     
+                        }
+                    }
+                }
+               
+
+                        Console.Clear();
 
                 Lakasmegjelenit(lakas);
-                Console.WriteLine($"{jelenlegirobpoz_i}{jelenlegirobpoz_j}");
+                Console.WriteLine($"Robot jelenlegi helye: {jelenlegirobpoz_i}:{jelenlegirobpoz_j}");
+                Console.WriteLine($"Koszos helyek eredetileg: {koszoshelyekkezd}");
+                Console.WriteLine($"Jelenlegi koszoshelyek száma: {jelkoszoshely}");
+                Console.WriteLine($"Lépések száma: {lepesekszama}");
+              
                 int regirobpoz_i = jelenlegirobpoz_i;
                 int regirobpoz_j = jelenlegirobpoz_j;
 
@@ -207,44 +231,42 @@ namespace robotporszivo_ikt_kurger
                 switch (lepes)
                 {
                     case 1:
-                        if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] != 'b' && jelenlegirobpoz_i - 1 >= 0)
+                        if ( jelenlegirobpoz_i - 1 >= 0 && lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] != 'b' )
                         {
                            jelenlegirobpoz_i--;
+                            lepesekszama++;
+                          
                         }
-                        else
-                        {
-                            lepes = rnd.Next(1, 5);
-                        }
-                        break;
+                      
+                            break;
                     case 2:
-                        if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] != 'b' && jelenlegirobpoz_i + 1 >= lakas.GetLength(0))
+                        if (jelenlegirobpoz_i + 1 <= lakas.GetLength(0) - 1  && lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] != 'b')
                         {
                            jelenlegirobpoz_i++;
+                            lepesekszama++;
                         }
-                        else
-                        {
-                            lepes = rnd.Next(1, 5);
-                        }
+                      
+
                         break;
                     case 3:
-                        if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] != 'b' && jelenlegirobpoz_j + 1 >= lakas.GetLength(1))
+                        if (jelenlegirobpoz_j + 1 <= lakas.GetLength(1) - 1 && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] != 'b'  )
                         {
                             jelenlegirobpoz_j++;
+                            lepesekszama++;
+
                         }
-                        else
-                        {
-                            lepes = rnd.Next(1, 5);
-                        }
+                      
+
                         break;
                     case 4:
-                        if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] != 'b' && jelenlegirobpoz_j - 1 >= 0)
+                        if ( jelenlegirobpoz_j - 1 >= 0 && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] != 'b' )
                         {
                             jelenlegirobpoz_j--;
+                            lepesekszama++;
+
                         }
-                        else
-                        {
-                            lepes = rnd.Next(1, 5);
-                        }
+                      
+
                         break;
 
 
@@ -255,9 +277,14 @@ namespace robotporszivo_ikt_kurger
                 }
                 lakas[regirobpoz_i, regirobpoz_j] = '_';
                 lakas[jelenlegirobpoz_i, jelenlegirobpoz_j] = 'r';
-                Thread.Sleep(500);
-            
-                
+                Thread.Sleep(1);
+                if(jelkoszoshely == 0)
+                {
+                    takaritasvege = true;
+                }
+      
+
+
 
 
 
