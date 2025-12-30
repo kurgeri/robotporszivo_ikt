@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace robotporszivo_ikt_kurger
@@ -25,37 +26,40 @@ namespace robotporszivo_ikt_kurger
                 }
 
             } while (n < 20 || n > 30 || m < 20 || m > 30 || n == m);
-            char[,] lakas = new char[n, m];
-            Feltolt(lakas);
-            char[,] robotlak = Clanker(lakas);
-            Robotmozg(lakas);
+            char[,] lakass = new char[n, m];
+            Feltolt(lakass);
+            lakass = Clanker(lakass);
+            Lakasmegjelenit(lakass);
+            Robotmozg(lakass);
+
+
 
 
         }
 
-        static void Feltolt(char[,] t)
+        static void Feltolt(char[,] lakas)
         {
             bool koszos = false, szabad = false;
             Random rnd = new Random();
-            for (int i = 0; i < t.GetLength(0); i++)
+            for (int i = 0; i < lakas.GetLength(0); i++)
             {
-                for (int j = 0; j < t.GetLength(1); j++)
+                for (int j = 0; j < lakas.GetLength(1); j++)
                 {
 
                     int szam = rnd.Next(1, 11);
 
                     if (szam <= 5) // szabad
                     {
-                        t[i, j] = '_';
+                        lakas[i, j] = '_';
                         szabad = true;
                     }
                     else if (szam <= 7) // bútor
                     {
-                        t[i, j] = 'b';
+                        lakas[i, j] = 'b';
                     }
                     else // koszos
                     {
-                        t[i, j] = 'k';
+                        lakas[i, j] = 'k';
                         koszos = true;
                     }
 
@@ -68,11 +72,11 @@ namespace robotporszivo_ikt_kurger
 
             if (!koszos || !szabad)
             {
-                Feltolt(t);
+                Feltolt(lakas);
             }
         }
 
-        static char[,] Clanker(char[,] t)
+        static char[,] Clanker(char[,] lakas)
         {
 
             List<int> ureshelyek = new List<int>();
@@ -82,13 +86,13 @@ namespace robotporszivo_ikt_kurger
 
             Random rnd = new Random();
 
-            for (int i = 0; i < t.GetLength(0); i++)
+            for (int i = 0; i < lakas.GetLength(0); i++)
             {
-                for (int j = 0; j < t.GetLength(1); j++)
+                for (int j = 0; j < lakas.GetLength(1); j++)
                 {
 
 
-                    if (t[i, j] == '_')
+                    if (lakas[i, j] == '_')
                     {
 
                         ureshelyek.Add(i);
@@ -101,23 +105,23 @@ namespace robotporszivo_ikt_kurger
 
             int robothelye = rnd.Next(0, ureshelyek.Count);
 
-            for (int i = 0; i < t.GetLength(0); i++)
+            for (int i = 0; i < lakas.GetLength(0); i++)
             {
-                for (int j = 0; j < t.GetLength(1); j++)
+                for (int j = 0; j < lakas.GetLength(1); j++)
                 {
-                    if (t[i, j] == '_')
+                    if (lakas[i, j] == '_')
                     {
 
 
 
                         if (robothelye % 2 == 0)
                         {
-                            t[ureshelyek[robothelye], ureshelyek[robothelye + 1]] = 'r';
+                            lakas[ureshelyek[robothelye], ureshelyek[robothelye + 1]] = 'r';
 
                         }
                         else
                         {
-                            t[ureshelyek[robothelye - 1], ureshelyek[robothelye]] = 'r';
+                            lakas[ureshelyek[robothelye - 1], ureshelyek[robothelye]] = 'r';
                         }
 
                     }
@@ -125,7 +129,7 @@ namespace robotporszivo_ikt_kurger
 
                 }
             }
-            return t;
+            return lakas;
         }
         static void Lakasmegjelenit(char[,] lakas)
         {
@@ -157,15 +161,110 @@ namespace robotporszivo_ikt_kurger
 
 
 
-        static void Robotmozg(char[,] t)
+        static void Robotmozg(char[,] lakas)
         {
             bool takaritasvege = false;
+            int[] robotpoz = new int[2];
+            int koszoshelyek = 0;
+            for (int i = 0; i < lakas.GetLength(0); i++)
+            {
+                for (int j = 0; j < lakas.GetLength(1); j++)
+                {
+                    if (lakas[i, j] == 'r')
+                    {
+                        robotpoz[0] = i;
+                        robotpoz[1] = j;
+                        Console.Write($"{robotpoz[0]} {robotpoz[1]}");
+                    }
+                    if (lakas[i, j] == 'k')
+                    {
+                        koszoshelyek++;
+
+                    }
+                }
+
+            }
+
+            int jelenlegirobpoz_i = robotpoz[0];
+            int jelenlegirobpoz_j = robotpoz[1];
 
             Random rnd = new Random();
+           
+
             do
             {
+                Console.Clear();
 
-            }while (!takaritasvege);
+                Lakasmegjelenit(lakas);
+                Console.WriteLine($"{jelenlegirobpoz_i}{jelenlegirobpoz_j}");
+                int regirobpoz_i = jelenlegirobpoz_i;
+                int regirobpoz_j = jelenlegirobpoz_j;
+
+
+
+
+                int lepes = rnd.Next(1, 5); // 1: Fel, 2: Le, 3: Jobb, 4: Bal
+                switch (lepes)
+                {
+                    case 1:
+                        if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] != 'b' && jelenlegirobpoz_i - 1 >= 0)
+                        {
+                           jelenlegirobpoz_i--;
+                        }
+                        else
+                        {
+                            lepes = rnd.Next(1, 5);
+                        }
+                        break;
+                    case 2:
+                        if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] != 'b' && jelenlegirobpoz_i + 1 >= lakas.GetLength(0))
+                        {
+                           jelenlegirobpoz_i++;
+                        }
+                        else
+                        {
+                            lepes = rnd.Next(1, 5);
+                        }
+                        break;
+                    case 3:
+                        if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] != 'b' && jelenlegirobpoz_j + 1 >= lakas.GetLength(1))
+                        {
+                            jelenlegirobpoz_j++;
+                        }
+                        else
+                        {
+                            lepes = rnd.Next(1, 5);
+                        }
+                        break;
+                    case 4:
+                        if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] != 'b' && jelenlegirobpoz_j - 1 >= 0)
+                        {
+                            jelenlegirobpoz_j--;
+                        }
+                        else
+                        {
+                            lepes = rnd.Next(1, 5);
+                        }
+                        break;
+
+
+
+
+
+
+                }
+                lakas[regirobpoz_i, regirobpoz_j] = '_';
+                lakas[jelenlegirobpoz_i, jelenlegirobpoz_j] = 'r';
+                Thread.Sleep(500);
+            
+                
+
+
+
+
+
+            } while (!takaritasvege);
+        
 
 
         }
