@@ -25,7 +25,7 @@ namespace robotporszivo_ikt_kurger
                     Console.WriteLine("Nem megfelelő értéktartományban adott összeget!");
                 }
 
-            } while (n < 5 || n > 30 || m < 5 || m > 30 || n == m);
+            } while (n < 2 || n > 30 || m < 3 || m > 30 || n == m);
             char[,] lakass = new char[n, m];
             Feltolt(lakass);
             lakass = Clanker(lakass);
@@ -161,7 +161,7 @@ namespace robotporszivo_ikt_kurger
 
             }
         }
-        
+
 
 
 
@@ -172,6 +172,7 @@ namespace robotporszivo_ikt_kurger
             int[] robotpoz = new int[2];
             int koszoshelyekkezd = 0;
             int jelkoszoshely;
+            int butordb = 0;
             for (int i = 0; i < lakas.GetLength(0); i++)
             {
 
@@ -189,173 +190,317 @@ namespace robotporszivo_ikt_kurger
 
 
                     }
+                    if (lakas[i, j] == 'b')
+                    {
+                        butordb++;
+                    }
 
                 }
 
 
             }
+
 
 
             int jelenlegirobpoz_i = robotpoz[0];
             int jelenlegirobpoz_j = robotpoz[1];
 
             int lepesekszama = 0;
+            string merrelep = "";
 
+            int maxsor = (lakas.GetLength(0)) - 1;
+            int maxoszlop = (lakas.GetLength(1)) - 1;
+
+
+            int robotbezarva = 0;
+
+            int maxlepes = ((lakas.GetLength(0) * lakas.GetLength(1)) - butordb) * koszoshelyekkezd;
             Random rnd = new Random();
+          // Robotbezárva
+            if (jelenlegirobpoz_i == 0 && jelenlegirobpoz_j == 0)
+            {
+                robotbezarva += 2;
+                if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] == 'b')
+                {
+                    robotbezarva++;
+                }
+                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] == 'b')
+                {
+                    robotbezarva++;
+                }
 
+            }
+            if (jelenlegirobpoz_i == maxsor && jelenlegirobpoz_j == maxoszlop)
+            {
+                robotbezarva += 2;
+                if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] == 'b')
+                {
+                    robotbezarva++;
+                }
+                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] == 'b')
+                {
+                    robotbezarva++;
+                }
+
+            }
+            if (jelenlegirobpoz_i == 0 && jelenlegirobpoz_j == maxoszlop)
+            {
+                robotbezarva += 2;
+                if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] == 'b')
+                {
+                    robotbezarva++;
+                }
+                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] == 'b')
+                {
+                    robotbezarva++;
+                }
+
+            }
+            if (jelenlegirobpoz_i == maxsor && jelenlegirobpoz_j == 0)
+            {
+                robotbezarva += 2;
+                if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] == 'b')
+                {
+                    robotbezarva++;
+                }
+                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] == 'b')
+                {
+                    robotbezarva++;
+                }
+
+            }
+
+
+
+
+           else if (jelenlegirobpoz_i == 0)
+            {
+                robotbezarva++;
+                if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] == 'b')
+                {
+                    robotbezarva++;
+                }
+                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] == 'b')
+                {
+                    robotbezarva++;
+                }
+                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] == 'b')
+                {
+                    robotbezarva++;
+                }
+
+
+
+            }
+            else if (jelenlegirobpoz_i == maxsor)
+            {
+                robotbezarva++;
+                if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] == 'b')
+                {
+                    robotbezarva++;
+                }
+                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] == 'b')
+                {
+                    robotbezarva++;
+                }
+                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] == 'b')
+                {
+                    robotbezarva++;
+                }
+            }
+            else if (jelenlegirobpoz_j == 0)
+            {
+                robotbezarva++;
+                if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] == 'b')
+                {
+                    robotbezarva++;
+                }
+                if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] == 'b')
+                {
+                    robotbezarva++;
+                }
+                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] == 'b')
+                {
+                    robotbezarva++;
+                }
+
+            }
+            else if (jelenlegirobpoz_j == maxoszlop)
+            {
+                robotbezarva++;
+                if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] == 'b')
+                {
+                    robotbezarva++;
+                }
+                if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] == 'b')
+                {
+                    robotbezarva++;
+                }
+                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] == 'b')
+                {
+                    robotbezarva++;
+                }
+            }
+            else if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] == 'b')
+            {
+                robotbezarva++;
+            }
+            else if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] == 'b')
+            {
+                robotbezarva++;
+            }
+            else if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] == 'b')
+            {
+                robotbezarva++;
+            }
+            else if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] == 'b')
+            {
+                robotbezarva++;
+            }
+
+            if (robotbezarva == 4)
+            {
+                takaritasvege = true;
+            }
 
             do
             {
-                jelkoszoshely = 0;
+               
+
+
+                    jelkoszoshely = 0;
+                    for (int i = 0; i < lakas.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < lakas.GetLength(1); j++)
+                        {
+                            if (lakas[i, j] == 'k')
+                            {
+                                jelkoszoshely++;
+                            }
+                        }
+                    }
+
+
+                    Console.Clear();
+
+                    Lakasmegjelenit(lakas);
+                    Console.WriteLine($"Robot jelenlegi helye: {jelenlegirobpoz_i}:{jelenlegirobpoz_j}");
+                    Console.WriteLine($"Bútorok száma:{butordb}");
+                    Console.WriteLine($"Koszos helyek eredetileg: {koszoshelyekkezd}");
+                    Console.WriteLine($"Hátra maradt koszoshelyek száma: {jelkoszoshely}");
+                    Console.WriteLine($"Lépések száma: {lepesekszama}");
+
+
+                    int regirobpoz_i = jelenlegirobpoz_i;
+                    int regirobpoz_j = jelenlegirobpoz_j;
+
+
+
+
+                    int lepes = rnd.Next(1, 5); // 1: Fel, 2: Le, 3: Jobb, 4: Bal
+                    Console.WriteLine($"Maga a lépés: {merrelep} ");
+
+                    switch (lepes)
+                    {
+                        case 1:
+                            if (jelenlegirobpoz_i - 1 >= 0 && lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] != 'b')
+                            {
+                                jelenlegirobpoz_i--;
+                                lepesekszama++;
+                                merrelep = "Fel";
+
+                            }
+
+
+                            break;
+                        case 2:
+                            if (jelenlegirobpoz_i + 1 <= maxsor && lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] != 'b')
+                            {
+                                jelenlegirobpoz_i++;
+                                lepesekszama++;
+                                merrelep = "Le";
+                            }
+
+
+
+                            break;
+                        case 3:
+                            if (jelenlegirobpoz_j + 1 <= maxoszlop && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] != 'b')
+                            {
+                                jelenlegirobpoz_j++;
+                                lepesekszama++;
+                                merrelep = "Jobb";
+
+                            }
+
+
+
+                            break;
+                        case 4:
+                            if (jelenlegirobpoz_j - 1 >= 0 && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] != 'b')
+                            {
+                                jelenlegirobpoz_j--;
+                                lepesekszama++;
+                                merrelep = "Bal";
+
+                            }
+
+                            break;
+
+
+
+
+
+
+                    }
+
+                    lakas[regirobpoz_i, regirobpoz_j] = '_';
+                    lakas[jelenlegirobpoz_i, jelenlegirobpoz_j] = 'r';
+                    Thread.Sleep(maxsor + maxoszlop);
+
+
+
+
+
+
+
+
+                    if (jelkoszoshely == 0 || lepesekszama > maxlepes)
+                    {
+                        takaritasvege = true;
+                    }
+                }while (!takaritasvege);
+
+
+
+                List<string> koszoslista = new List<string>();
+                string koszoshely;
                 for (int i = 0; i < lakas.GetLength(0); i++)
                 {
                     for (int j = 0; j < lakas.GetLength(1); j++)
                     {
                         if (lakas[i, j] == 'k')
                         {
-                            jelkoszoshely++;
+                            koszoshely = Convert.ToString($"({i}:{j})");
+                            koszoslista.Add(koszoshely);
                         }
                     }
                 }
-
-
-                Console.Clear();
-
-                Lakasmegjelenit(lakas);
-                Console.WriteLine($"Robot jelenlegi helye: {jelenlegirobpoz_i}:{jelenlegirobpoz_j}");
-                Console.WriteLine($"Koszos helyek eredetileg: {koszoshelyekkezd}");
-                Console.WriteLine($"Hátra maradt koszoshelyek száma: {jelkoszoshely}");
-                Console.WriteLine($"Lépések száma: {lepesekszama}");
-
-
-                int regirobpoz_i = jelenlegirobpoz_i;
-                int regirobpoz_j = jelenlegirobpoz_j;
-
-
-
-
-                int lepes = rnd.Next(1, 5); // 1: Fel, 2: Le, 3: Jobb, 4: Bal
-                string merrelep = "";
-                Console.WriteLine($"Maga a lépés: {lepes} - {merrelep} ");
-                switch (lepes)
+                Console.WriteLine("A megmaradt koszos területek helyei:");
+                for (int i = 0; i < koszoslista.Count(); i++)
                 {
-                    case 1:
-                        if (jelenlegirobpoz_i - 1 >= 0 && lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] != 'b')
-                        {
-                            jelenlegirobpoz_i--;
-                            lepesekszama++;
-                            merrelep = "Fel";
-
-                        }
-                        else
-                        {
-                            lepes = rnd.Next(2, 5);
-
-                        }
-
-                        break;
-                    case 2:
-                        if (jelenlegirobpoz_i + 1 <= lakas.GetLength(0) - 1 && lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] != 'b')
-                        {
-                            jelenlegirobpoz_i++;
-                            lepesekszama++;
-                            merrelep = "Le";
-                        }
-                        else
-                        {
-
-                            lepes = rnd.Next(1, 5);
-                            if (lepes == 2)
-                            {
-                                lepes--;
-                            }
-                        }
-
-
-                        break;
-                    case 3:
-                        if (jelenlegirobpoz_j + 1 <= lakas.GetLength(1) - 1 && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] != 'b')
-                        {
-                            jelenlegirobpoz_j++;
-                            lepesekszama++;
-                            merrelep = "Jobb";
-
-                        }
-                        else
-                        {
-                            lepes = rnd.Next(1, 5);
-                            if (lepes == 3)
-                            {
-                                lepes--;
-                            }
-                        }
-
-
-                        break;
-                    case 4:
-                        if (jelenlegirobpoz_j - 1 >= 0 && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] != 'b')
-                        {
-                            jelenlegirobpoz_j--;
-                            lepesekszama++;
-                            merrelep = "Bal";
-
-                        }
-                        else
-                        {
-                            lepes = rnd.Next(1, 4);
-                        }
-                        break;
-
-
-
-
-
-
+                    Console.Write($"{koszoslista[i]}");
                 }
 
-                lakas[regirobpoz_i, regirobpoz_j] = '_';
-                lakas[jelenlegirobpoz_i, jelenlegirobpoz_j] = 'r';
-                Thread.Sleep(50);
 
 
 
-
-
-
-
-
-                if (jelkoszoshely == 0 || lepesekszama > 200)
-                {
-                    takaritasvege = true;
-                }
-            } while (!takaritasvege);
-            List<string> koszoslista = new List<string>();
-            string koszoshely;
-            for (int i = 0; i < lakas.GetLength(0); i++)
-            {
-                for (int j = 0; j < lakas.GetLength(1); j++)
-                {
-                    if (lakas[i,j] == 'k')
-                    {
-                       koszoshely = Convert.ToString($"({i}:{j})");
-                        koszoslista.Add(koszoshely);
-                    }
-                }
             }
-            Console.WriteLine("A megmaradt koszos területek helyei:");
-            for (int i = 0; i < koszoslista.Count(); i++ )
-            {
-                Console.Write($"{koszoslista[i]}");
-            }
-
-
-
 
         }
 
     }
 
-}
 
 
 
