@@ -208,161 +208,176 @@ namespace robotporszivo_ikt_kurger
             int lepesekszama = 0;
             string merrelep = "";
 
-            int maxsor = (lakas.GetLength(0)) - 1;
-            int maxoszlop = (lakas.GetLength(1)) - 1;
+            int maxsorindex = (lakas.GetLength(0)) - 1;
+            int maxoszlopindex = (lakas.GetLength(1)) - 1;
 
 
-            int robotbezarva = 0;
+            byte koszosbezarva = 0;
 
             int maxlepes = ((lakas.GetLength(0) * lakas.GetLength(1)) - butordb) * koszoshelyekkezd;
             Random rnd = new Random();
-          // Robotbezárva
-            if (jelenlegirobpoz_i == 0 && jelenlegirobpoz_j == 0)
+            // Robotbezárva
+            byte elerhetetlenkosz = 0;
+            for (int i= 0 ; i < lakas.GetLength(0); i++)
             {
-                robotbezarva += 2;
-                if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] == 'b')
+                for (int j = 0; j < lakas.GetLength(1); j++)
                 {
-                    robotbezarva++;
-                }
-                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] == 'b')
-                {
-                    robotbezarva++;
-                }
+                    if (lakas[i, j] == 'k')
+                    {
+                        if (i == 0 && j == 0)
+                        {
+                            koszosbezarva += 2;
+                            if (lakas[i + 1, j] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i, j+1] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
 
+                        }
+                        else if (i == maxsorindex && j == maxoszlopindex)
+                        {
+                            koszosbezarva += 2;
+                            if (lakas[i - 1, j] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i, j - 1] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+
+                        }
+                        else if (i == 0 && j == maxoszlopindex)
+                        {
+                            koszosbezarva += 2;
+                            if (lakas[i + 1, j] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i, j - 1] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+
+                        }
+                        else if (i == maxsorindex && j == 0)
+                        {
+                            koszosbezarva += 2;
+                            if (lakas[i - 1, j] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i, j + 1] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+
+                        }
+
+
+
+
+                        else if (i == 0)
+                        {
+                            koszosbezarva++;
+                            if (lakas[i + 1, j] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i, j + 1] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i, j - 1] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+
+
+
+                        }
+                        else if (i == maxsorindex)
+                        {
+                            koszosbezarva++;
+                            if (lakas[i - 1, j] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i, j + 1] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i, j - 1] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                        }
+                        else if (j == 0)
+                        {
+                            koszosbezarva++;
+                            if (lakas[i + 1, j] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i - 1, j] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i, j + 1] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+
+                        }
+                        else if (j == maxoszlopindex)
+                        {
+                            koszosbezarva++;
+                            if (lakas[i + 1, j] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i - 1, j] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i, j - 1] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                        }
+                        else if (lakas[i + 1, j] == 'b')
+                        {
+                            koszosbezarva++;
+                        }
+                        else if (lakas[i - 1, j] == 'b')
+                        {
+                            koszosbezarva++;
+                        }
+                        else if (lakas[i, j + 1] == 'b')
+                        {
+                            koszosbezarva++;
+                        }
+                        else if (lakas[i, j - 1] == 'b')
+                        {
+                            koszosbezarva++;
+                        }
+                        
+                      
+                    }
+                    if (koszosbezarva == 4)
+                    {
+                        elerhetetlenkosz++;
+                    }
+                    koszosbezarva = 0;
+                }
             }
-            if (jelenlegirobpoz_i == maxsor && jelenlegirobpoz_j == maxoszlop)
-            {
-                robotbezarva += 2;
-                if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] == 'b')
-                {
-                    robotbezarva++;
-                }
-                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] == 'b')
-                {
-                    robotbezarva++;
-                }
-
-            }
-            if (jelenlegirobpoz_i == 0 && jelenlegirobpoz_j == maxoszlop)
-            {
-                robotbezarva += 2;
-                if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] == 'b')
-                {
-                    robotbezarva++;
-                }
-                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] == 'b')
-                {
-                    robotbezarva++;
-                }
-
-            }
-            if (jelenlegirobpoz_i == maxsor && jelenlegirobpoz_j == 0)
-            {
-                robotbezarva += 2;
-                if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] == 'b')
-                {
-                    robotbezarva++;
-                }
-                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] == 'b')
-                {
-                    robotbezarva++;
-                }
-
-            }
+          
 
 
-
-
-           else if (jelenlegirobpoz_i == 0)
-            {
-                robotbezarva++;
-                if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] == 'b')
-                {
-                    robotbezarva++;
-                }
-                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] == 'b')
-                {
-                    robotbezarva++;
-                }
-                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] == 'b')
-                {
-                    robotbezarva++;
-                }
-
-
-
-            }
-            else if (jelenlegirobpoz_i == maxsor)
-            {
-                robotbezarva++;
-                if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] == 'b')
-                {
-                    robotbezarva++;
-                }
-                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] == 'b')
-                {
-                    robotbezarva++;
-                }
-                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] == 'b')
-                {
-                    robotbezarva++;
-                }
-            }
-            else if (jelenlegirobpoz_j == 0)
-            {
-                robotbezarva++;
-                if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] == 'b')
-                {
-                    robotbezarva++;
-                }
-                if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] == 'b')
-                {
-                    robotbezarva++;
-                }
-                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] == 'b')
-                {
-                    robotbezarva++;
-                }
-
-            }
-            else if (jelenlegirobpoz_j == maxoszlop)
-            {
-                robotbezarva++;
-                if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] == 'b')
-                {
-                    robotbezarva++;
-                }
-                if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] == 'b')
-                {
-                    robotbezarva++;
-                }
-                if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] == 'b')
-                {
-                    robotbezarva++;
-                }
-            }
-            else if (lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] == 'b')
-            {
-                robotbezarva++;
-            }
-            else if (lakas[jelenlegirobpoz_i - 1, jelenlegirobpoz_j] == 'b')
-            {
-                robotbezarva++;
-            }
-            else if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] == 'b')
-            {
-                robotbezarva++;
-            }
-            else if (lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] == 'b')
-            {
-                robotbezarva++;
-            }
-
-            if (robotbezarva == 4)
-            {
-                takaritasvege = true;
-            }
-
+            int robotbezarva = 0;
             do
             {
                
@@ -386,8 +401,8 @@ namespace robotporszivo_ikt_kurger
                     Lakasmegjelenit(lakas);
                     Console.WriteLine($"Robot jelenlegi helye: {jelenlegirobpoz_i}:{jelenlegirobpoz_j}");
                     Console.WriteLine($"Bútorok száma:{butordb}");
-                    Console.WriteLine($"Koszos helyek eredetileg: {koszoshelyekkezd}");
-                    Console.WriteLine($"Hátra maradt koszoshelyek száma: {jelkoszoshely}");
+                    Console.WriteLine($"Koszos helyek eredetileg: {koszoshelyekkezd} (Ebből {elerhetetlenkosz} biztosan elérhetetlen, szorosan bútorok közé van zárva)");
+                    Console.WriteLine($"Hátra maradt koszoshelyek száma: {jelkoszoshely-elerhetetlenkosz}");
                     Console.WriteLine($"Lépések száma: {lepesekszama}");
 
 
@@ -414,7 +429,7 @@ namespace robotporszivo_ikt_kurger
 
                             break;
                         case 2:
-                            if (jelenlegirobpoz_i + 1 <= maxsor && lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] != 'b')
+                            if (jelenlegirobpoz_i + 1 <= maxsorindex && lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] != 'b')
                             {
                                 jelenlegirobpoz_i++;
                                 lepesekszama++;
@@ -425,7 +440,7 @@ namespace robotporszivo_ikt_kurger
 
                             break;
                         case 3:
-                            if (jelenlegirobpoz_j + 1 <= maxoszlop && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] != 'b')
+                            if (jelenlegirobpoz_j + 1 <= maxoszlopindex && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] != 'b')
                             {
                                 jelenlegirobpoz_j++;
                                 lepesekszama++;
@@ -453,19 +468,27 @@ namespace robotporszivo_ikt_kurger
 
 
                     }
+         
 
                     lakas[regirobpoz_i, regirobpoz_j] = '_';
                     lakas[jelenlegirobpoz_i, jelenlegirobpoz_j] = 'r';
-                    Thread.Sleep(maxsor + maxoszlop);
+                    Thread.Sleep(200);
+
+                if (lepesekszama == 0)
+                {
+                    robotbezarva++;
+
+                }
+                if(robotbezarva == 10)
+                {
+                    takaritasvege = true;
+                }
 
 
+              
+                
 
-
-
-
-
-
-                    if (jelkoszoshely == 0 || lepesekszama > maxlepes)
+                if (jelkoszoshely-elerhetetlenkosz == 0 || lepesekszama > maxlepes)
                     {
                         takaritasvege = true;
                     }
