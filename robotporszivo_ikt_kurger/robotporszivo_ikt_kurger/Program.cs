@@ -26,12 +26,12 @@ namespace robotporszivo_ikt_kurger
                 }
 
             } while (n < 20 || n > 30 || m < 20 || m > 30 || n == m);
-            char[,] lakass = new char[n, m];
-            Feltolt(lakass);
-            lakass = Clanker(lakass);
-            Lakasmegjelenit(lakass);
+            char[,] lakas = new char[n, m];
+            Feltolt(lakas);
+            lakas = Clanker(lakas);
+            Lakasmegjelenit(lakas);
             Console.WriteLine("--------------------------------------------------------------------------------------------");
-            Robotmozg(lakass);
+            Takaritas(lakas);
 
 
 
@@ -159,23 +159,16 @@ namespace robotporszivo_ikt_kurger
                     Console.ResetColor();
 
                 }
-
                 Console.WriteLine();
 
             }
         }
-
-
-
-
-
-        static void Robotmozg(char[,] lakas)
+        static void Takaritas(char[,] lakas)
         {
-            bool takaritasvege = false;
-            int[] robotpoz = new int[2];
             int koszoshelyekkezd = 0;
-            int jelkoszoshely;
             int butordb = 0;
+            int jelenlegirobpoz_i = 0;
+            int jelenlegirobpoz_j = 0;
             for (int i = 0; i < lakas.GetLength(0); i++)
             {
 
@@ -183,8 +176,8 @@ namespace robotporszivo_ikt_kurger
                 {
                     if (lakas[i, j] == 'r')
                     {
-                        robotpoz[0] = i;
-                        robotpoz[1] = j;
+                        jelenlegirobpoz_i = i;
+                        jelenlegirobpoz_j = j;
 
                     }
                     if (lakas[i, j] == 'k')
@@ -202,24 +195,10 @@ namespace robotporszivo_ikt_kurger
 
 
             }
-
-
-
-            int jelenlegirobpoz_i = robotpoz[0];
-            int jelenlegirobpoz_j = robotpoz[1];
-
-            int lepesekszama = 0;
-            string merrelep = "";
-
             int maxsorindex = (lakas.GetLength(0)) - 1;
             int maxoszlopindex = (lakas.GetLength(1)) - 1;
-
-
+            // Koszos területek elérhetetlenségének vizsgálása
             byte koszosbezarva = 0;
-
-            int maxlepes = ((lakas.GetLength(0) * lakas.GetLength(1)) - butordb) * koszoshelyekkezd;
-            Random rnd = new Random();
-            // Robotbezárva
             byte elerhetetlenkosz = 0;
             for (int i = 0; i < lakas.GetLength(0); i++)
             {
@@ -279,10 +258,6 @@ namespace robotporszivo_ikt_kurger
                             }
 
                         }
-
-
-
-
                         else if (i == 0)
                         {
                             koszosbezarva++;
@@ -382,13 +357,14 @@ namespace robotporszivo_ikt_kurger
             }
 
 
-
-
+            int lepesekszama = 0;
+            int maxlepes = ((lakas.GetLength(0) * lakas.GetLength(1)) - butordb) * koszoshelyekkezd;
+            int jelkoszoshely;
+            bool takaritasvege = false;
+            Random rnd = new Random();
+            //Robotmozgása
             do
             {
-
-
-
                 jelkoszoshely = 0;
                 for (int i = 0; i < lakas.GetLength(0); i++)
                 {
@@ -417,8 +393,6 @@ namespace robotporszivo_ikt_kurger
 
 
                         }
-
-
                         break;
                     case 2:
                         if (jelenlegirobpoz_i + 1 <= maxsorindex && lakas[jelenlegirobpoz_i + 1, jelenlegirobpoz_j] != 'b')
@@ -427,9 +401,6 @@ namespace robotporszivo_ikt_kurger
                             lepesekszama++;
 
                         }
-
-
-
                         break;
                     case 3:
                         if (jelenlegirobpoz_j + 1 <= maxoszlopindex && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j + 1] != 'b')
@@ -439,9 +410,6 @@ namespace robotporszivo_ikt_kurger
 
 
                         }
-
-
-
                         break;
                     case 4:
                         if (jelenlegirobpoz_j - 1 >= 0 && lakas[jelenlegirobpoz_i, jelenlegirobpoz_j - 1] != 'b')
@@ -452,12 +420,6 @@ namespace robotporszivo_ikt_kurger
                         }
 
                         break;
-
-
-
-
-
-
                 }
 
 
@@ -474,11 +436,6 @@ namespace robotporszivo_ikt_kurger
                 {
                     takaritasvege = true;
                 }
-
-
-
-
-
                 if (jelkoszoshely - elerhetetlenkosz == 0 || lepesekszama > maxlepes)
                 {
                     takaritasvege = true;
@@ -488,10 +445,8 @@ namespace robotporszivo_ikt_kurger
 
 
             Console.WriteLine($"Koszos helyek eredetileg: {koszoshelyekkezd} (Ebből {elerhetetlenkosz} biztosan elérhetetlen, szorosan bútorok közé van zárva)");
-            Console.WriteLine($"Hátra maradt koszoshelyek száma: {jelkoszoshely - elerhetetlenkosz}");
+            Console.WriteLine($"Hátra maradt koszoshelyek száma: {jelkoszoshely}");
             Console.WriteLine($"Lépések száma: {lepesekszama}");
-
-
 
 
             List<string> koszoslista = new List<string>();
@@ -508,13 +463,17 @@ namespace robotporszivo_ikt_kurger
                 }
             }
             Console.WriteLine("A megmaradt koszos területek helyei:");
-            for (int i = 0; i < koszoslista.Count(); i++)
+            if (jelkoszoshely > 0)
             {
-                Console.Write($"{koszoslista[i]}");
+                for (int i = 0; i < koszoslista.Count(); i++)
+                {
+                    Console.Write($"{koszoslista[i]}");
+                }
             }
-
-
-
+            else
+            {
+                Console.WriteLine("Nem maradtak koszos területek, az összes fel lett takarítva.");
+            }
 
         }
 
