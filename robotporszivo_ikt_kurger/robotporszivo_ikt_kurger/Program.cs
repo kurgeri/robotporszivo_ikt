@@ -29,7 +29,10 @@ namespace robotporszivo_ikt_kurger
             char[,] lakass = new char[n, m];
             Feltolt(lakass);
             lakass = Clanker(lakass);
+            Lakasmegjelenit(lakass);
+            Console.WriteLine("--------------------------------------------------------------------------------------------");
             Robotmozg(lakass);
+
 
 
 
@@ -168,44 +171,6 @@ namespace robotporszivo_ikt_kurger
 
         static void Robotmozg(char[,] lakas)
         {
-            byte gyorsasagfok = 0;
-            int gyorsassag = 0;
-            do
-            {
-                Console.Write($"Milyen gyorsaságú legyen a takarítás? \n 1.Extrém gyors\n 2.Gyors \n 3.Normál \n 4.Lassú \n 5. Extrém lassú\n:");
-                gyorsasagfok = Convert.ToByte(Console.ReadLine());
-                
-
-                switch (gyorsasagfok)
-                {
-                    case 1:
-                        gyorsassag = 25;
-                        break;
-                    case 2:
-                        gyorsassag = 50;
-                        break;
-                    case 3:
-                        gyorsassag = 100;
-                        break;
-                    case 4:
-                        gyorsassag = 200;
-                        break;
-                    case 5:
-                        gyorsassag = 500;
-                        break;
-                    default:
-                        Console.WriteLine("Rossz számot adott meg, kérem 1 és 5 között adjon meg egy számot!");
-                        break;
-                }
-            } while (gyorsasagfok <= 0 || gyorsasagfok > 5);
-
-
-
-
-
-
-
-
             bool takaritasvege = false;
             int[] robotpoz = new int[2];
             int koszoshelyekkezd = 0;
@@ -386,21 +351,24 @@ namespace robotporszivo_ikt_kurger
                                 koszosbezarva++;
                             }
                         }
-                        else if (lakas[i + 1, j] == 'b')
+                        else
                         {
-                            koszosbezarva++;
-                        }
-                        else if (lakas[i - 1, j] == 'b')
-                        {
-                            koszosbezarva++;
-                        }
-                        else if (lakas[i, j + 1] == 'b')
-                        {
-                            koszosbezarva++;
-                        }
-                        else if (lakas[i, j - 1] == 'b')
-                        {
-                            koszosbezarva++;
+                            if (lakas[i + 1, j] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i - 1, j] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i, j + 1] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
+                            if (lakas[i, j - 1] == 'b')
+                            {
+                                koszosbezarva++;
+                            }
                         }
 
 
@@ -415,7 +383,7 @@ namespace robotporszivo_ikt_kurger
 
 
 
-            int robotbezarva = 0;
+
             do
             {
 
@@ -433,27 +401,12 @@ namespace robotporszivo_ikt_kurger
                     }
                 }
 
-
-                Console.Clear();
-
-                Lakasmegjelenit(lakas);
-                Console.WriteLine($"Robot jelenlegi helye: {jelenlegirobpoz_i}:{jelenlegirobpoz_j}");
-                Console.WriteLine($"Bútorok száma:{butordb}");
-                Console.WriteLine($"Koszos helyek eredetileg: {koszoshelyekkezd} (Ebből {elerhetetlenkosz} biztosan elérhetetlen, szorosan bútorok közé van zárva)");
-                Console.WriteLine($"Hátra maradt koszoshelyek száma: {jelkoszoshely - elerhetetlenkosz}");
-                Console.WriteLine($"Lépések száma: {lepesekszama}");
-                Console.WriteLine($"Merre lép: {merrelep} ");
-
-
                 int regirobpoz_i = jelenlegirobpoz_i;
                 int regirobpoz_j = jelenlegirobpoz_j;
 
-
-
-
                 int lepes = rnd.Next(1, 5); // 1: Fel, 2: Le, 3: Jobb, 4: Bal
 
-
+                int robotbezarva = 0;
                 switch (lepes)
                 {
                     case 1:
@@ -461,7 +414,7 @@ namespace robotporszivo_ikt_kurger
                         {
                             jelenlegirobpoz_i--;
                             lepesekszama++;
-                            merrelep = "Fel";
+
 
                         }
 
@@ -472,7 +425,7 @@ namespace robotporszivo_ikt_kurger
                         {
                             jelenlegirobpoz_i++;
                             lepesekszama++;
-                            merrelep = "Le";
+
                         }
 
 
@@ -483,7 +436,7 @@ namespace robotporszivo_ikt_kurger
                         {
                             jelenlegirobpoz_j++;
                             lepesekszama++;
-                            merrelep = "Jobb";
+
 
                         }
 
@@ -495,7 +448,6 @@ namespace robotporszivo_ikt_kurger
                         {
                             jelenlegirobpoz_j--;
                             lepesekszama++;
-                            merrelep = "Bal";
 
                         }
 
@@ -511,7 +463,7 @@ namespace robotporszivo_ikt_kurger
 
                 lakas[regirobpoz_i, regirobpoz_j] = '_';
                 lakas[jelenlegirobpoz_i, jelenlegirobpoz_j] = 'r';
-                Thread.Sleep(gyorsassag);
+
 
                 if (lepesekszama == 0)
                 {
@@ -532,6 +484,13 @@ namespace robotporszivo_ikt_kurger
                     takaritasvege = true;
                 }
             } while (!takaritasvege);
+            Lakasmegjelenit(lakas);
+
+
+            Console.WriteLine($"Koszos helyek eredetileg: {koszoshelyekkezd} (Ebből {elerhetetlenkosz} biztosan elérhetetlen, szorosan bútorok közé van zárva)");
+            Console.WriteLine($"Hátra maradt koszoshelyek száma: {jelkoszoshely - elerhetetlenkosz}");
+            Console.WriteLine($"Lépések száma: {lepesekszama}");
+
 
 
 
